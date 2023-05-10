@@ -1,7 +1,15 @@
 import { useState } from "react";
 
-const Statistics = (props) => {
-  if (props.total === 0) {
+const StatisticLine = ({name, number}) => {
+  return (
+    <p>{name} {number}</p>
+  )
+}
+
+const Statistics = ({good, neutral, bad, total, average, positive}) => {
+  
+
+  if (total === 0) {
     return (
       <div>
         no feedbacks given
@@ -10,13 +18,19 @@ const Statistics = (props) => {
   }
   return (
     <div>
-      <p>{props.stats1} {props.number1} </p>
-      <p>{props.stats2} {props.number2} </p>
-      <p>{props.stats3} {props.number3} </p>
-      <p>{props.stats4} {props.number4} </p>
-      <p>{props.stats5} {props.number5} </p>
-      <p>{props.stats6} {props.number6} </p>
+      <StatisticLine name='good' number={good} />
+      <StatisticLine name='neutral' number={neutral} />
+      <StatisticLine name='bad' number={bad} />
+      <StatisticLine name='all' number={total} />
+      <StatisticLine name='average' number={average} />
+      <StatisticLine name='positive' number={positive} />
     </div>
+  )
+}
+
+const Button = ({text, handleClick}) => {
+  return (
+    <button onClick={handleClick} >{text}</button>
   )
 }
 
@@ -52,18 +66,17 @@ const App = () => {
   return (
     <div>
       <h1>give feedback</h1>
-      <button onClick={handleGoodClick} >good</button>
-      <button onClick={handleNeutralClick} >neutral</button>
-      <button onClick={handleBadClicks} >bad</button>
+      <Button text='good' handleClick={handleGoodClick} />
+      <Button text='neutral' handleClick={handleNeutralClick} />
+      <Button text='bad' handleClick={handleBadClicks} />
       <h1>statistics</h1>
       <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
         total={total}
-        stats1='good' number1={good}
-        stats2='neutral' number2={neutral}
-        stats3='bad' number3={bad}
-        stats4='all' number4={total}
-        stats5='average' number5={average}
-        stats6='positive' number6={positive.toString().concat(' %')}
+        average={average}
+        positive={positive.toString().concat(' %')}
       />
     </div>
   )
