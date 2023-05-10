@@ -11,7 +11,6 @@ const StatisticLine = ({name, number}) => {
 
 const Statistics = ({good, neutral, bad, total, average, positive}) => {
   
-
   if (total === 0) {
     return (
       <div>
