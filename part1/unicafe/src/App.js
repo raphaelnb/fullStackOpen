@@ -1,9 +1,21 @@
 import { useState } from "react";
 
-const Statistics = ({ name, number }) => {
+const Statistics = (props) => {
+  if (props.total === 0) {
+    return (
+      <div>
+        no feedbacks given
+      </div>
+    )
+  }
   return (
     <div>
-      <p>{name} {number} </p>
+      <p>{props.stats1} {props.number1} </p>
+      <p>{props.stats2} {props.number2} </p>
+      <p>{props.stats3} {props.number3} </p>
+      <p>{props.stats4} {props.number4} </p>
+      <p>{props.stats5} {props.number5} </p>
+      <p>{props.stats6} {props.number6} </p>
     </div>
   )
 }
@@ -44,12 +56,15 @@ const App = () => {
       <button onClick={handleNeutralClick} >neutral</button>
       <button onClick={handleBadClicks} >bad</button>
       <h1>statistics</h1>
-      <Statistics name='good' number={good} />
-      <Statistics name='neutral' number={neutral} />
-      <Statistics name='bad' number={bad} />
-      <Statistics name='all' number={total} />
-      <Statistics name='average' number={average} />
-      <Statistics name='positive' number={positive.toString().concat(' %')}/>
+      <Statistics
+        total={total}
+        stats1='good' number1={good}
+        stats2='neutral' number2={neutral}
+        stats3='bad' number3={bad}
+        stats4='all' number4={total}
+        stats5='average' number5={average}
+        stats6='positive' number6={positive.toString().concat(' %')}
+      />
     </div>
   )
 }
