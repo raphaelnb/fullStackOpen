@@ -18,7 +18,6 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
 
-
   const [selected, setSelected] = useState(Math.floor(Math.random() * anecdotes.length))
 
   const [points, setPoint] = useState([
@@ -39,11 +38,16 @@ const App = () => {
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <div>
         {anecdotes[selected]}
       </div>
       <Button handleClick={vote} text='vote' />
       <Button handleClick={randonNumber} text='next anecdote' />
+      <h1>Anecdote with most votes</h1>
+      <div>
+        {anecdotes[points.indexOf(Math.max(...points))]}
+      </div>
     </div>
   )
 }
