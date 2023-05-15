@@ -36,7 +36,7 @@ const Total = ({ total }) => {
 
   return (
     <div>
-      <p>Number of exercises {x.reduce((a,p) => a + p, 0) } </p>
+      <p>Number of exercises {x.reduce((a,p) => a + p, 0)} </p>
     </div>
   )
 }
