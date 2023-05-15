@@ -5,18 +5,18 @@ const Header = (props) => {
         <h1>{props.course}</h1>
       </div>
     )
-  }
+}
   
-  const Part = ({ name, exercises}) => {
+const Part = ({ name, exercises}) => {
     console.log(name, exercises)
     return (
       <div>
         <p>{name} {exercises}</p>
       </div>
     )
-  }
+}
   
-  const Content = ({ parts }) => {
+const Content = ({ parts }) => {
     console.log(parts)
     return (
       <div>
@@ -27,13 +27,26 @@ const Header = (props) => {
         }
       </div>
     )
-  }
+}
 
+const Total = ({ total }) => {    
+  console.log(total)
+    
+  const x = total.map(n => n.exercises)
+
+  return (
+    <div>
+      <p>Number of exercises {x.reduce((a,p) => a + p, 0) } </p>
+    </div>
+  )
+}
+  
 const Course = ({course}) => {
     return (
         <div>
             <Header course={course.name} />
             <Content parts={course.parts}/>
+            <Total total={course.parts} />
         </div>
     )
 }
