@@ -1,26 +1,31 @@
 import { useState } from "react";
+import AddPerson from "./components/AddPerson";
+import Phonebook from "./components/Phonebook";
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    {name: 'Ada Lovelace', number: '9098023-23'}
+  const [people, setPeople] = useState([
+    {name: 'Ada Lovelace', number: '39-44-5323523'}
   ])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [search, setSearch] = useState('')
+  const [searchMatch, setSearchMatch] = useState([])
 
   const addName = (e) => {
     e.preventDefault()
 
-    if (persons.find(n => n.name === newName)) {
+    if (people.find(n => n.name === newName)) {
       alert(`${newName} is already on the phonebook`)
     } else {
       const NameObject = {
         name: newName,
         number: newNumber
       }
-      setPersons(persons.concat(NameObject))
+      setPeople(people.concat(NameObject))
     }
     setNewName('')
-    setNewNumber('') 
+    setNewNumber('')
+    console.log(Object.values(people[0])) 
   }
 
   const handleNewName = (e) => {
@@ -32,35 +37,67 @@ const App = () => {
     console.log(e.target.value)
     setNewNumber(e.target.value)
   }
+
+  const handleSearch = (e) => {
+    const filtered = people.filter(person => person.name === e.target.value
+      )
+      console.log(e.target.value)
+      setSearchMatch(filtered)
+      console.log(filtered)
+  }
   
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addName}>
-        <div>
-          name: <input 
-            value={newName}
-            onChange={handleNewName}
-          />
-        </div>
-        <div>
-          number: <input 
-            value={newNumber}
-            onChange={handleNewNumber}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      <ul>
-        {persons.map((person, i) => 
-          <li key={person.name}>{person.name} {person.number} </li>
-        )}
-      </ul>
+      <div>
+        search <input 
+          onChange={handleSearch}
+        />
+      </div>
+      <div>
+        <ul>
+          {searchMatch.map(p => {
+            return (
+              <li key={p.name}>{p.name} {p.number} </li>
+            )
+          })}
+        </ul>
+      </div>
+      <AddPerson 
+        addName={addName}
+        newName={newName}
+        handleNewName={handleNewName}
+        newNumber={newNumber}
+        handleNewNumber={handleNewNumber}
+      />
+      <Phonebook people={people} />
     </div>
   )
 }
 
 export default App;
+
+
+/** funciona *
+ * const handleSearch = (e) => {
+    const filtered = persons.filter(person => person.name === e.target.value
+    )
+    console.log(e.target.value)
+    setSearchMatch(filtered)
+    console.log(filtered)
+  }
+ */
+
+/**
+ *         persons.map(person => Object.keys(person).reduce((acc, key) =>{
+          acc[key.toLowerCase()] = person[key]
+          return acc
+        },{}) === e.target.value ?
+        setSearchMatch(acc) :
+        setSearchMatch([])
+        )
+        
+    
+    console.log(e.target.value)
+    console.log(filtered)
+ */
