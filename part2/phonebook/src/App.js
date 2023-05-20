@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AddPerson from "./components/AddPerson";
 import Phonebook from "./components/Phonebook";
-import axios from "axios";
+import peopleService from './services/people'
 
 const App = () => {
 
@@ -14,13 +14,11 @@ const App = () => {
   useEffect(() => {
     console.log('effect')
 
-    const eventHandler = response => {
-      console.log('promise fulfilled')
-      setPeople(response.data)
-    }
-
-    const promise = axios.get('http://localhost:3001/persons')
-    promise.then(eventHandler)
+    peopleService
+      .getAll()
+      .then(people => {
+        setPeople(people)
+      }) 
   },[])
 
   const addName = (e) => {
@@ -33,16 +31,14 @@ const App = () => {
         name: newName,
         number: newNumber
       }
-      axios
-        .post('http://localhost:3001/persons', NameObject)
-        .then(response => {
-          console.log(response)
-          setPeople(people.concat(response.data))
+      peopleService
+        .create(NameObject)
+        .then(person => {
+          setPeople(people.concat(person))
+          setNewName('')
+          setNewNumber('')
         })
-
-    }
-    setNewName('')
-    setNewNumber('')
+      }
   }
 
   const handleNewName = (e) => {
