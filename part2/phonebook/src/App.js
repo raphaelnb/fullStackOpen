@@ -40,7 +40,23 @@ const App = () => {
         })
       }
   }
-
+ 
+  const exclude = (id) => {
+    console.log('clicked ',id)
+    const personName = people.find(p => p.id === id)
+    if (window.confirm(`Do you want to delete ${personName.name} ?`)) {
+      peopleService
+      .exclude(id)
+      .then(
+        del => {
+          const newPeople = people.filter(de => de.id !== id)
+          console.log(newPeople, del)
+          setPeople(newPeople)
+        }
+        )
+    }
+  }
+  
   const handleNewName = (e) => {
     console.log(e.target.value)
     setNewName(e.target.value)
@@ -83,7 +99,11 @@ const App = () => {
         newNumber={newNumber}
         handleNewNumber={handleNewNumber}
       />
-      <Phonebook people={people} />
+      <div> {console.log(people)}
+        <Phonebook people={people} 
+          handle={exclude}
+        /> 
+      </div>
     </div>
   )
 }

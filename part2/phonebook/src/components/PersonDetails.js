@@ -1,6 +1,8 @@
-const PersonDetails = ({ name, number }) => {
+const PersonDetails = ({ name, number, handleClick}) => {
     return (
-        <li>{name} {number} </li>
+        <div>
+            <li>{name} {number} <button onClick={handleClick} >delete</button> </li>
+        </div>
     )
 }
 export default PersonDetails
