@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import AddPerson from "./components/AddPerson";
 import Phonebook from "./components/Phonebook";
 import peopleService from './services/people'
+import Notification from './components/Notification'
 
 const App = () => {
 
@@ -10,6 +11,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [search, setSearch] = useState('')
   const [searchMatch, setSearchMatch] = useState([])
+  const [addMessage, setAddMessage] = useState(null)
 
   useEffect(() => {
     console.log('effect')
@@ -26,6 +28,18 @@ const App = () => {
 
     if (people.find(n => n.name === newName)) {
       alert(`${newName} is already on the phonebook`)
+      /*
+      const numberUpdated = people.find(person => person.name === newName)
+      const userUpdated = {...numberUpdated, number: newNumber}
+
+      peopleService
+        .update(userUpdated.id, userUpdated)
+        .then(res => {
+          setPeople(people.map(p => p.id !== userUpdated.id
+            ? p
+            : res))
+        })
+        */
     } else {
       const NameObject = {
         name: newName,
@@ -38,7 +52,11 @@ const App = () => {
           setNewName('')
           setNewNumber('')
         })
-      }
+        setAddMessage(`Added ${newName}`)
+        setTimeout(() => {
+          setAddMessage(null)
+        }, 5000)
+    }
   }
  
   const exclude = (id) => {
@@ -99,6 +117,7 @@ const App = () => {
         newNumber={newNumber}
         handleNewNumber={handleNewNumber}
       />
+      <Notification message={addMessage} />
       <div> {console.log(people)}
         <Phonebook people={people} 
           handle={exclude}

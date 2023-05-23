@@ -15,6 +15,11 @@ const create = (person) => {
 const exclude = (id) => {
     const request = axios.delete(`${baseUrl}/${id}`)
     return request.then(response => response.data)
-} 
+}
 
-export default { getAll, create, exclude }
+const update = (id) => {
+    const request = axios.put(`${baseUrl}/${id}`)
+    return request.then(response => response.data)
+}
+
+export default { getAll, create, exclude, update }
