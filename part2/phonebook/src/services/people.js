@@ -1,25 +1,36 @@
-import axios from "axios";
+const express = require('express')
+const app = express()
+app.use(express.json())
 
-const baseUrl = 'http://localhost:3001/persons'
+let people = [
+    {
+        "name": "Aarto",
+        "number": "453245",
+        "id": 1
+      },
+      {
+        "name": "Ada Lovelace",
+        "number": "39-44-5323523",
+        "id": 2
+      },
+      {
+        "name": "Dan Abramov",
+        "number": "12-43-234345",
+        "id": 3
+      },
+      {
+        "name": "Mary Poppendieck",
+        "number": "39-23-6423122",
+        "id": 4
+      }
+]
 
-const getAll = () => {
-    const request = axios.get(baseUrl)
-    return request.then(response => response.data)
-}
+app.get('/api/persons', (request, response) => {
+    response.json(people)
+})
 
-const create = (person) => {
-    const request = axios.post(baseUrl, person)
-    return request.then(response => response.data)
-}
+const PORT = 3001
 
-const exclude = (id) => {
-    const request = axios.delete(`${baseUrl}/${id}`)
-    return request.then(response => response.data)
-}
-
-const update = (id) => {
-    const request = axios.put(`${baseUrl}/${id}`)
-    return request.then(response => response.data)
-}
-
-export default { getAll, create, exclude, update }
+app.listen(PORT, () => {
+    console.log(`server is running on port ${PORT}`)
+})
